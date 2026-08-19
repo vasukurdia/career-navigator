@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -116,6 +117,6 @@ export default {
         "slide-up": "slide-up 0.8s ease-out forwards",
       },
     },
-  },
-  plugins: [require("tailwindcss-animate")],
+    },
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
