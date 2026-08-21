@@ -23,7 +23,7 @@ serve(async (req) => {
       });
     }
 
-    console.log('Resource chat request:', { message, skills });
+    console.log('Resource chat request received');
 
     const messages = [
       {

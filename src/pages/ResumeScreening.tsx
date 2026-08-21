@@ -13,6 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import DashboardNavbar from '@/components/DashboardNavbar';
 import { useUser } from '@/contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 interface SectionAnalysis {
   name: string;
@@ -80,6 +81,7 @@ const ResumeScreening = () => {
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { userProfile, openAIKey } = useUser();
 
   // Skill Gap Analysis states
@@ -176,6 +178,7 @@ const ResumeScreening = () => {
           title: 'Analysis complete!',
           description: 'Your resume has been analyzed. You can now run a skill gap analysis.',
         });
+        navigate('/quiz');
       }
     } catch (error) {
       console.error('Analysis error:', error);
@@ -361,22 +364,13 @@ const ResumeScreening = () => {
                   </div>
 
                   <Button
-                    onClick={analyzeResume}
-                    disabled={isAnalyzing || !resumeText.trim()}
-                    className="w-full btn-primary"
-                  >
-                    {isAnalyzing ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Analyzing Resume...
-                      </>
-                    ) : (
-                      <>
-                        <FileText className="w-4 h-4 mr-2" />
-                        Analyze Resume
-                      </>
-                    )}
-                  </Button>
+  onClick={() => navigate('/quiz')}
+  disabled={!resumeText.trim()}
+  className="w-full btn-primary"
+>
+  <FileText className="w-4 h-4 mr-2" />
+  Analyze Resume
+</Button>
                 </div>
               </Card>
             ) : (

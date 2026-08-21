@@ -23,7 +23,7 @@ serve(async (req) => {
       });
     }
 
-    console.log('Cover letter generation request:', { jobTitle, companyName });
+    console.log('Cover letter generation request received');
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

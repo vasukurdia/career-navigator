@@ -16,50 +16,58 @@ export interface QuizQuestion {
   options: QuizOption[];
 }
 
-export interface QuizProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface QuizProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSubmit"> {
   title: string;
   questions: QuizQuestion[];
   answers?: Record<string, string>;
   onAnswerChange?: (questionId: string, optionId: string) => void;
-  onSubmit?: (answers: Record<string, string>) => void;
+  onQuizSubmit?: (answers: Record<string, string>) => void;
 }
 
-function Quiz({ title, questions, answers = {}, onAnswerChange, onSubmit, className, ...props }: QuizProps) {
+function Quiz({ title, questions, answers = {}, onAnswerChange, onQuizSubmit, className, ...props }: QuizProps) {
   const [submitted, setSubmitted] = React.useState(false);
+  const [liveMessage, setLiveMessage] = React.useState("");
 
-  const unansweredIds = questions
-    .map((q) => q.id)
-    .filter((id) => !answers[id]);
-
+  const unansweredIds = questions.map((q) => q.id).filter((id) => !answers[id]);
   const isComplete = unansweredIds.length === 0;
 
   const handleSubmit = () => {
     setSubmitted(true);
     if (isComplete) {
-      onSubmit?.(answers);
+      setLiveMessage("Quiz submitted successfully.");
+      onQuizSubmit?.(answers);
+    } else {
+      setLiveMessage(
+        `Please answer all questions before submitting. ${unansweredIds.length} question${
+          unansweredIds.length > 1 ? "s" : ""
+        } remaining.`,
+      );
     }
   };
 
   return (
-    <Card className={cn("max-w-full", className)} {...props}>
+    <Card className={cn("max-w-xl", className)} {...props}>
       <CardHeader>
         <CardTitle className="text-center text-primary">{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        {questions.map((question) => {
+        {questions.map((question, index) => {
           const isUnanswered = submitted && !answers[question.id];
           return (
-            <div key={question.id} className="space-y-3">
-              <p
+            <fieldset key={question.id} className="space-y-3">
+              <legend
+                id={`${question.id}-label`}
                 className={cn(
                   "text-sm font-medium",
                   isUnanswered ? "text-destructive" : "text-foreground",
                 )}
               >
-                {question.prompt}
+                {index + 1}. {question.prompt}
                 {isUnanswered && <span className="ml-2 text-xs">(Answer required)</span>}
-              </p>
+              </legend>
               <RadioGroup
+                aria-labelledby={`${question.id}-label`}
+                aria-invalid={isUnanswered}
                 value={answers[question.id]}
                 onValueChange={(value) => onAnswerChange?.(question.id, value)}
               >
@@ -72,7 +80,7 @@ function Quiz({ title, questions, answers = {}, onAnswerChange, onSubmit, classN
                   </div>
                 ))}
               </RadioGroup>
-            </div>
+            </fieldset>
           );
         })}
       </CardContent>
@@ -90,6 +98,9 @@ function Quiz({ title, questions, answers = {}, onAnswerChange, onSubmit, classN
             Quiz submitted successfully.
           </p>
         )}
+        <div role="status" aria-live="polite" className="sr-only">
+          {liveMessage}
+        </div>
       </CardFooter>
     </Card>
   );
