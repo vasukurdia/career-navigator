@@ -1,39 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Quiz, type QuizQuestion } from "./Quiz";
-
-const jsBasicsQuestions: QuizQuestion[] = [
-  {
-    id: "q1",
-    prompt: "Which keyword is used to declare a constant variable in JavaScript?",
-    options: [
-      { id: "var", label: "var" },
-      { id: "let", label: "let" },
-      { id: "const", label: "const" },
-      { id: "function", label: "function" },
-    ],
-  },
-  {
-    id: "q2",
-    prompt: 'What is the output of typeof "Hello"?',
-    options: [
-      { id: "text", label: "text" },
-      { id: "String", label: "String" },
-      { id: "string", label: "string" },
-      { id: "char", label: "char" },
-    ],
-  },
-  {
-    id: "q3",
-    prompt: "Which symbol is used for strict equality in JavaScript?",
-    options: [
-      { id: "eq1", label: "=" },
-      { id: "eq2", label: "==" },
-      { id: "eq3", label: "===" },
-      { id: "neq", label: "!=" },
-    ],
-  },
-];
+import { Quiz } from "./Quiz";
+import { jsBasicsQuestions } from "./quizData";
 
 const meta: Meta<typeof Quiz> = {
   title: "Quiz/Quiz",
@@ -60,6 +28,7 @@ export const Interactive: Story = {
         questions={jsBasicsQuestions}
         answers={answers}
         onAnswerChange={(qId, optId) => setAnswers((prev) => ({ ...prev, [qId]: optId }))}
+        onQuizSubmit={(finalAnswers) => console.log("Submitted:", finalAnswers)}
       />
     );
   },

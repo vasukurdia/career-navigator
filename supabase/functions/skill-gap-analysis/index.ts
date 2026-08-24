@@ -23,7 +23,7 @@ serve(async (req) => {
       });
     }
 
-    console.log('Skill gap analysis request:', { currentSkills, targetRole });
+    console.log('Skill gap analysis request received');
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
