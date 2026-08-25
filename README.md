@@ -10,7 +10,7 @@ Intentional career development rarely happens by accident. We designed the AI Ca
 
 1. **Clone & install**
 ```bash
-   git clone <repo-url>
+   git clone https://github.com/vasukurdia/career-navigator
    cd Career-Navigator
    npm install
 ```
