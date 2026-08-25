@@ -6,6 +6,37 @@ Intentional career development rarely happens by accident. We designed the AI Ca
 
 ---
 
+## Local Setup (Verified Steps)
+
+1. **Clone & install**
+```bash
+   git clone <repo-url>
+   cd Career-Navigator
+   npm install
+```
+
+2. **Environment variables**
+```bash
+   cp .env.example .env.local
+```
+   Fill in `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from your Supabase
+   project's **Settings → API** page. See `.env.example` for details.
+
+3. **Run the app**
+```bash
+   npm run dev
+```
+   App runs on `http://localhost:3000`.
+
+4. **Run tests / lint / typecheck**
+```bash
+   npm run test        # Vitest + React Testing Library
+   npm run lint         # ESLint
+   npm run typecheck    # tsc --noEmit
+```
+
+---
+
 ## Workflow at a Glance
 
 1. **Capture & Analyze** – intake a resume or raw profile, parse every section with AI, and compute an ATS readiness score.
@@ -88,12 +119,3 @@ The platform is intentionally AI-first; no phase functions without the underlyin
 Success is measured in resume quality lifts, skill mastery completion, application rates, and employment outcomes.
 
 ---
-
-## Getting Started
-
-1. Clone the repo, install dependencies, and spin up the UI/backend (refer to `/docs/setup.md` if available).
-2. Upload or compose a profile to initiate Phase 1.
-3. Follow the guided workflow — progress in each phase unlocks richer recommendations.
-4. Share feedback, log successes, and iterate with the “Measure & Iterate” dashboard.
-
-Need contributions? Open a PR, test AI pipelines, or help expand job-matching data sources.
