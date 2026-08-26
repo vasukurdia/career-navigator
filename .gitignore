@@ -28,3 +28,6 @@ dist-ssr
 *.sw?
 
 *storybook.log
+
+# Test coverage reports
+coverage
