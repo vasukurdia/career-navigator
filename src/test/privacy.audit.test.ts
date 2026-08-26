@@ -84,8 +84,6 @@ describe("Project-wide student privacy audit (COPPA) — src/ and supabase/funct
         }
       });
     }
-    // Only flags raw field usage (e.g. `{ message }`) — safe derived-value access
-    // like `message?.length` is intentionally excluded above.
     expect(flagged).toEqual([]);
   });
 });
